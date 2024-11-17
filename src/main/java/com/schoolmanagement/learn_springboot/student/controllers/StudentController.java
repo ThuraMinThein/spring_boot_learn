@@ -2,6 +2,7 @@ package com.schoolmanagement.learn_springboot.student.controllers;
 
 import com.schoolmanagement.learn_springboot.student.Student;
 import com.schoolmanagement.learn_springboot.student.StudentRepository;
+import jakarta.websocket.server.PathParam;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,9 @@ public class StudentController {
     }
 
     @GetMapping("students")
-    private List<Student> findAllStudents() {
+    private List<Student> findAllStudents(
+            @PathParam("search") String search
+    ) {
         return this.studentRepository.findAll();
     }
 
@@ -41,7 +44,6 @@ public class StudentController {
             @RequestBody Student studentBody,
             @PathVariable("id") int id
     ) {
-        System.out.println("updated");
         Student student = this.findAStudent(id);
         return this.studentRepository.save(studentBody);
     }
